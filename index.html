@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerevyn - AI Assistant</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>Cerevyn</h1>
+                </div>
+                <div class="language-selector">
+                    <button id="lang-en" class="lang-btn active" data-lang="en">
+                        <i class="fas fa-globe"></i> English
+                    </button>
+                    <button id="lang-hi" class="lang-btn" data-lang="hi">
+                        <i class="fas fa-globe"></i> हिंदी
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <div class="welcome-content">
+                        <i class="fas fa-robot"></i>
+                        <h2>Welcome to Cerevyn</h2>
+                        <p>Your multilingual AI assistant. I can understand and respond in English and Hindi.</p>
+                        <p>Click the microphone to speak or type your message below.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <button id="micButton" class="mic-button" title="Click to speak">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <div class="input-area">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Type your message here..." 
+                        rows="1"
+                    ></textarea>
+                </div>
+                <button id="sendButton" class="send-button" title="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+                <span id="statusText">Ready to chat</span>
+            </div>
+        </div>
+
+        <!-- Add Data Button -->
+        <button class="add-data-btn" onclick="toggleDataPanel()" title="Add Knowledge">
+            upload
+        </button>
+    </div>
+
+    <!-- Data Management Panel -->
+    <div class="data-panel" id="dataPanel" style="display: none;">
+        <div class="panel-content">
+            <div class="panel-header">
+                <h3><i class="fas fa-database"></i> Add Knowledge to Cerevyn</h3>
+                <button class="close-btn" onclick="toggleDataPanel()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Add Text -->
+            <div class="input-group">
+                <label><i class="fas fa-file-text"></i> Add Text Data:</label>
+                <textarea id="textInput" placeholder="Enter any text data, documents, or information you want Cerevyn to learn..."></textarea>
+                <button class="action-btn" onclick="addTextData()">
+                    <i class="fas fa-plus"></i> Add Text
+                </button>
+            </div>
+            
+            <!-- Add File -->
+            <div class="input-group">
+                <label><i class="fas fa-upload"></i> Upload File:</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" accept=".pdf,.docx,.txt,.csv,.json,.xlsx" onchange="showFilePreview(this)">
+                    <label for="fileInput" class="file-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Choose File (PDF, DOCX, TXT, CSV, JSON, XLSX)
+                    </label>
+                </div>
+                
+                <!-- File Preview -->
+                <div class="file-preview" id="filePreview" style="display: none;">
+                    <div class="file-info">
+                        <i class="fas fa-file"></i>
+                        <div class="file-details">
+                            <span class="file-name" id="fileName"></span>
+                            <span class="file-size" id="fileSize"></span>
+                        </div>
+                        <button class="remove-file-btn" onclick="clearFileSelection()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="action-btn" onclick="addFileData()" id="uploadBtn" disabled>
+                    <i class="fas fa-upload"></i> Upload File
+                </button>
+            </div>
+
+            <div class="panel-info">
+                <p><i class="fas fa-info-circle"></i> Supported formats: PDF, Word, Text, CSV, JSON, Excel</p>
+                <p><i class="fas fa-lightbulb"></i> Once added, Cerevyn can answer questions about this data!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Cerevyn is thinking...</p>
+        </div>
+    </div>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>

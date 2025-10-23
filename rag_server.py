@@ -7,7 +7,11 @@ import os
 from datetime import datetime
 import PyPDF2
 import docx
-import pandas as pd
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
 
 app = Flask(__name__)
 CORS(app)
@@ -75,8 +79,16 @@ class RAGSystem:
                 return file.read()
         
         elif ext in ['.csv', '.xlsx']:
-            df = pd.read_csv(file_path) if ext == '.csv' else pd.read_excel(file_path)
-            return df.to_string()
+            if PANDAS_AVAILABLE:
+                df = pd.read_csv(file_path) if ext == '.csv' else pd.read_excel(file_path)
+                return df.to_string()
+            else:
+                # Fallback: read CSV as plain text
+                if ext == '.csv':
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        return file.read()
+                else:
+                    return f"Excel file support requires pandas. File: {file_path}"
         
         elif ext == '.json':
             with open(file_path, 'r', encoding='utf-8') as file:

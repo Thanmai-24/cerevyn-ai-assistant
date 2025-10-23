@@ -208,3 +208,8 @@ if __name__ == '__main__':
     print("Starting Cerevyn RAG Server...")
     print(f"Server will be available at: http://localhost:{port}")
     app.run(debug=debug, host='0.0.0.0', port=port)
+
+# Ensure the app binds to the correct port when imported by gunicorn
+import os
+if os.environ.get('PORT'):
+    print(f"Configuring Flask app for port {os.environ.get('PORT')}")
